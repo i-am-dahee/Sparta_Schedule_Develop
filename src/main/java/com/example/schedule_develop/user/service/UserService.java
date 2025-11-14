@@ -68,6 +68,7 @@ public class UserService {
     }
 
     // 유저 수정
+    // TODO : 수정 시간 바로 반영되는지 확인
     @Transactional
     public UserResponse update(Long userId, UserRequest request) {
         User user = userRepository.findById(userId).orElseThrow(
