@@ -4,6 +4,8 @@ import com.example.schedule_develop.common.BaseEntity;
 import com.example.schedule_develop.schedule.domain.Schedule;
 import com.example.schedule_develop.user.domain.User;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,5 +35,9 @@ public class Comment extends BaseEntity {
         this.content = content;
         this.user = user;
         this.schedule = schedule;
+    }
+
+    public void update(@NotBlank(message = "내용을 입력해 주세요.") @Size(max = 50, message = "내용은 50자 이하여야 합니다.") String content) {
+        this.content = content;
     }
 }
