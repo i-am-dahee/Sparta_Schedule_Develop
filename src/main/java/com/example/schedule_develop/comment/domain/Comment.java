@@ -1,5 +1,6 @@
 package com.example.schedule_develop.comment.domain;
 
+import com.example.schedule_develop.common.BaseEntity;
 import com.example.schedule_develop.schedule.domain.Schedule;
 import com.example.schedule_develop.user.domain.User;
 import jakarta.persistence.*;
@@ -11,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "comments")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Comment {
+public class Comment extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
