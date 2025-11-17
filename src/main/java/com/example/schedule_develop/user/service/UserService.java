@@ -1,5 +1,6 @@
 package com.example.schedule_develop.user.service;
 
+import com.example.schedule_develop.config.PasswordEncoder;
 import com.example.schedule_develop.user.domain.User;
 import com.example.schedule_develop.user.domain.UserRepository;
 import com.example.schedule_develop.user.dto.LoginRequest;
@@ -20,6 +21,7 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     // 유저 생성
     @Transactional
@@ -27,7 +29,7 @@ public class UserService {
         User user = new User(
                 request.getName(),
                 request.getEmail(),
-                request.getPassword()
+                passwordEncoder.encode(request.getPassword())
         );
         User savedUser = userRepository.save(user);
         return new UserResponse(
@@ -107,7 +109,7 @@ public class UserService {
         User user = userRepository.findByEmail(request.getEmail()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "이메일 또는 비밀번호가 일치하지 않습니다.")
         );
-        if (!request.getPassword().equals(user.getPassword())) {
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "이메일 또는 비밀번호가 일치하지 않습니다.");
         }
         return new LoginResponse(
