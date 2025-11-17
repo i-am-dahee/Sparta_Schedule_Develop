@@ -1,6 +1,11 @@
 package com.example.schedule_develop.comment.domain;
 
+import com.example.schedule_develop.common.BaseEntity;
+import com.example.schedule_develop.schedule.domain.Schedule;
+import com.example.schedule_develop.user.domain.User;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,9 +14,30 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "comments")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Comment {
+public class Comment extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
+    private String content;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "schedule_id")
+    private Schedule schedule;
+
+    public Comment(String content, User user, Schedule schedule) {
+        this.content = content;
+        this.user = user;
+        this.schedule = schedule;
+    }
+
+    public void update(@NotBlank(message = "내용을 입력해 주세요.") @Size(max = 50, message = "내용은 50자 이하여야 합니다.") String content) {
+        this.content = content;
+    }
 }
