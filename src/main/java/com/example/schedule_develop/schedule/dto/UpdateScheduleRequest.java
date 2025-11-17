@@ -1,6 +1,5 @@
 package com.example.schedule_develop.schedule.dto;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
