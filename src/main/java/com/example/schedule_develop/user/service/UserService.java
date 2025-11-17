@@ -2,11 +2,15 @@ package com.example.schedule_develop.user.service;
 
 import com.example.schedule_develop.user.domain.User;
 import com.example.schedule_develop.user.domain.UserRepository;
+import com.example.schedule_develop.user.dto.LoginRequest;
+import com.example.schedule_develop.user.dto.LoginResponse;
 import com.example.schedule_develop.user.dto.UserRequest;
 import com.example.schedule_develop.user.dto.UserResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +26,8 @@ public class UserService {
     public UserResponse save(UserRequest request) {
         User user = new User(
                 request.getName(),
-                request.getEmail()
+                request.getEmail(),
+                request.getPassword()
         );
         User savedUser = userRepository.save(user);
         return new UserResponse(
@@ -94,5 +99,20 @@ public class UserService {
                 () -> new IllegalStateException("존재하지 않는 유저입니다.")
         );
         userRepository.deleteById(userId);
+    }
+
+    // 로그인
+    @Transactional(readOnly = true)
+    public LoginResponse login(LoginRequest request) {
+        User user = userRepository.findByEmail(request.getEmail()).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "이메일 또는 비밀번호가 일치하지 않습니다.")
+        );
+        if (!request.getPassword().equals(user.getPassword())) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "이메일 또는 비밀번호가 일치하지 않습니다.");
+        }
+        return new LoginResponse(
+                user.getId(),
+                user.getEmail()
+        );
     }
 }
