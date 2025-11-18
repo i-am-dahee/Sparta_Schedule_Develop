@@ -9,7 +9,6 @@ import com.example.schedule_develop.schedule.domain.Schedule;
 import com.example.schedule_develop.schedule.domain.ScheduleRepository;
 import com.example.schedule_develop.user.domain.User;
 import com.example.schedule_develop.user.domain.UserRepository;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

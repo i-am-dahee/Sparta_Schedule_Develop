@@ -42,7 +42,7 @@ public class ScheduleController {
     // 일정 페이징 조회
     @GetMapping("/schedules/pages")
     public ResponseEntity<Page<PageScheduleResponse>> getPages(
-            @PageableDefault(page = 0, size = 10, sort = "modifiedAt", direction = Sort.Direction.DESC) Pageable pageable
+            @PageableDefault(sort = "modifiedAt", direction = Sort.Direction.DESC) Pageable pageable
     ) {
         Page<PageScheduleResponse> result = scheduleService.getPages(pageable);
         return ResponseEntity.status(HttpStatus.OK).body(result);

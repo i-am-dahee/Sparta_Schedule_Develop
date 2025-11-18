@@ -4,8 +4,6 @@ import com.example.schedule_develop.common.BaseEntity;
 import com.example.schedule_develop.schedule.domain.Schedule;
 import com.example.schedule_develop.user.domain.User;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
