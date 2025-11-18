@@ -1,11 +1,16 @@
 package com.example.schedule_develop.schedule.controller;
 
 import com.example.schedule_develop.schedule.dto.CreateScheduleRequest;
+import com.example.schedule_develop.schedule.dto.PageScheduleResponse;
 import com.example.schedule_develop.schedule.dto.ScheduleResponse;
 import com.example.schedule_develop.schedule.dto.UpdateScheduleRequest;
 import com.example.schedule_develop.schedule.service.ScheduleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +36,15 @@ public class ScheduleController {
     @GetMapping("/schedules")
     public ResponseEntity<List<ScheduleResponse>> getAllSchedules() {
         List<ScheduleResponse> result = scheduleService.getAll();
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
+    // 일정 페이징 조회
+    @GetMapping("/schedules/pages")
+    public ResponseEntity<Page<PageScheduleResponse>> getPages(
+            @PageableDefault(sort = "modifiedAt", direction = Sort.Direction.DESC) Pageable pageable
+    ) {
+        Page<PageScheduleResponse> result = scheduleService.getPages(pageable);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
