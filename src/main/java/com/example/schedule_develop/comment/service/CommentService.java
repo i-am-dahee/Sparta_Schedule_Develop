@@ -27,7 +27,7 @@ public class CommentService {
 
     // 댓글 생성
     @Transactional
-    public CommentResponse save(@Valid CreateCommentRequest request) {
+    public CommentResponse save(CreateCommentRequest request) {
         User user = userRepository.findById(request.getUserId()).orElseThrow(
                 () -> new IllegalStateException("존재하지 않는 유저입니다.")
         );
@@ -87,7 +87,7 @@ public class CommentService {
 
     // 댓글 수정
     @Transactional
-    public CommentResponse update(Long commentId, @Valid UpdateCommentRequest request) {
+    public CommentResponse update(Long commentId, UpdateCommentRequest request) {
         Comment comment = commentRepository.findById(commentId).orElseThrow(
                 () -> new IllegalStateException("존재하지 않는 댓글입니다.")
         );

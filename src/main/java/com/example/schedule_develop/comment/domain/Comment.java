@@ -37,7 +37,7 @@ public class Comment extends BaseEntity {
         this.schedule = schedule;
     }
 
-    public void update(@NotBlank(message = "내용을 입력해 주세요.") @Size(max = 50, message = "내용은 50자 이하여야 합니다.") String content) {
+    public void update(String content) {
         this.content = content;
     }
 }
